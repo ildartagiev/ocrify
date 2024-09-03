@@ -1,11 +1,11 @@
 import os
+from io import BytesIO
 from typing import Any
 
 import pytesseract
+from docx import Document
 from dotenv import load_dotenv
 from nipype.interfaces.base import ImageFile
-
-from src.extractors.pdf.pdf_extractor import PdfExtractor
 
 load_dotenv()
 pytesseract.pytesseract.tesseract_cmd = os.getenv('TESSERACT_CMD')
@@ -28,7 +28,8 @@ def extract_text_with_tesseract(image: ImageFile,
     return result
 
 
-def process_document(file_path):
+def extract_text_from_pdf(file_path):
+    from src.extractors.pdf.pdf_extractor import PdfExtractor
     extractor = PdfExtractor()
     images = extractor.extract(file_path)
 
@@ -39,3 +40,21 @@ def process_document(file_path):
         text += extracted_text + os.linesep
 
     return text
+
+
+def create_docx_document(text: str) -> Document:
+    """Создает Word документ с заданным текстом."""
+    # Создаем новый документ
+    doc = Document()
+    # Добавляем текст в документ
+    doc.add_paragraph(text)
+    return doc
+
+
+def extract_text_from_pdf_to_docx_as_bytes(file_path):
+    extracted_text = extract_text_from_pdf(file_path)
+    doc = create_docx_document(extracted_text)
+    docx_bytes = BytesIO()
+    doc.save(docx_bytes)
+    docx_bytes.seek(0)
+    return docx_bytes

@@ -19,11 +19,9 @@ http://localhost:8080/ocr
 Принимает список файлов (сейчас работает только с pdf) \
 И возвращает ответ в видео словаря, где ключ - это имя файла, а значение - извлеченный текст
 
-### Запуска локально
+### Запуск локально
 
-Потребуется [Скачать](https://github.com/UB-Mannheim/tesseract/wiki) установить tesseract \
+Потребуется [Скачать](https://github.com/UB-Mannheim/tesseract/wiki) и установить tesseract \
 Прямая [ссылка](https://github.com/UB-Mannheim/tesseract/releases/download/v5.4.0.20240606/tesseract-ocr-w64-setup-5.4.0.20240606.exe) на файл
 
-При установке, нужно будет выбрать русский и английский языки в tessdata
-
-TODO
+При установке, нужно будет дополнительно выбрать русский и английский языки в tessdata
